@@ -12,114 +12,112 @@
             --bg-gray: #FAFAFA;
             --bg-sem-gray: #F9F9F9;
             --text-dark: #1A1A1A;
-            --text-gray: #4A4A4A;
+            --text-gray: #6B7280;
+            --text-light-gray: #9CA3AF;
             
             /* Control Tecnica Colors */
-            --primary-blue: #003865; /* Azul oscuro corporativo */
+            --primary-blue: #003865;
             --primary-soft: rgba(0, 56, 101, 0.04);
             --primary-hover: rgba(0, 56, 101, 0.08);
-            --accent-red: #E3000F; /* Rojo del acento del logo */
+            --accent-red: #E3000F;
             
-            --border: #EAEAEA;
-            --classic-link: #003865;
+            --border: #E5E7EB;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-white); color: var(--text-dark); line-height: 1.6; }
+        .hidden { display: none !important; }
         a { text-decoration: none; transition: color 0.3s ease; }
 
         /* ================= HEADER ================= */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 24px 5%; background: var(--bg-white); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
-        .logo-text { font-family: 'Poppins', sans-serif; font-size: 1.2rem; color: var(--text-dark); }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: var(--bg-white); position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .logo-text { font-family: 'Poppins', sans-serif; font-size: 1.2rem; color: var(--text-dark); font-weight: 600; }
         
         .header-right { display: flex; align-items: center; gap: 30px; }
-        
-        nav ul { list-style: none; display: flex; gap: 25px; }
-        nav ul li a { color: var(--text-gray); font-size: 0.95rem; font-weight: 500; }
+        nav ul { list-style: none; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        nav ul li a { color: var(--text-dark); font-size: 0.9rem; font-weight: 500; }
         nav ul li a:hover { color: var(--accent-red); }
 
+        .lang-switch { display: flex; gap: 8px; font-size: 0.8rem; background: var(--bg-gray); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); }
+        .lang-switch button { background: none; border: none; cursor: pointer; color: var(--text-gray); font-weight: 600; font-family: 'Inter', sans-serif; transition: 0.3s; }
+        .lang-switch button.active { color: var(--primary-blue); }
+
         /* ================= HERO ================= */
-        .hero { display: flex; align-items: center; justify-content: space-between; background: var(--primary-blue); padding: 80px 10%; min-height: 50vh; color: white; gap: 40px; position: relative; overflow: hidden; }
-        .hero::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: var(--accent-red); }
+        .hero { display: flex; align-items: center; justify-content: space-between; background: var(--primary-blue); padding: 80px 10%; min-height: 45vh; color: white; gap: 40px; border-bottom: 6px solid var(--accent-red); }
         .hero-left { flex: 1; display: flex; justify-content: center; }
-        .hero-left img { max-width: 350px; } /* Ajustado para el logo horizontal */
+        .hero-left img { max-width: 320px; width: 100%; height: auto; }
         .hero-right { flex: 1.5; }
-        .hero-right h1 { font-size: 2.8rem; font-weight: 600; line-height: 1.2; letter-spacing: -1px; margin-bottom: 20px; }
-        .hero-right p { font-size: 1.2rem; color: rgba(255,255,255,0.85); font-weight: 300; }
+        .hero-right h1 { font-size: 2.8rem; font-weight: 700; line-height: 1.2; letter-spacing: -1px; margin-bottom: 20px; }
+        .hero-right p { font-size: 1.15rem; color: rgba(255,255,255,0.9); font-weight: 400; }
 
         /* ================= LAYOUT COMMON ================= */
-        section { padding: 100px 10%; }
+        section { padding: 90px 10%; border-bottom: 1px solid var(--border); }
         .bg-gray { background-color: var(--bg-gray); }
-        .section-header { margin-bottom: 60px; max-width: 800px; }
-        .section-header h2 { font-size: 2.2rem; font-weight: 600; margin-bottom: 15px; letter-spacing: -0.5px; color: var(--primary-blue); }
+        
+        .section-header { margin-bottom: 50px; max-width: 800px; }
+        .section-header h2 { font-size: 2rem; font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; color: var(--primary-blue); display: flex; align-items: center; gap: 15px; }
         .section-header p { font-size: 1.1rem; color: var(--text-gray); }
-
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
         
-        /* Cards genéricas y de Entregables */
-        .card { background: var(--primary-soft); padding: 40px 30px; border-radius: 12px; border: 1px solid rgba(0, 56, 101, 0.05); transition: 0.3s ease; }
-        .card:hover { background: var(--primary-hover); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,56,101,0.05); }
-        .card-badge { display: inline-block; background: var(--primary-blue); color: white; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 4px; margin-bottom: 15px; }
-        .card h3 { font-size: 1.3rem; color: var(--text-dark); margin-bottom: 15px; font-weight: 600; }
-        .card > p { color: var(--text-gray); font-size: 0.95rem; margin-bottom: 20px; }
+        .badge { background: var(--accent-red); color: white; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         
-        .card-subtitle { font-size: 0.85rem; text-transform: uppercase; color: var(--accent-red); font-weight: 700; margin: 20px 0 10px 0; letter-spacing: 0.5px; }
+        /* Cards */
+        .card { background: var(--primary-soft); padding: 40px 30px; border-radius: 12px; border: 1px solid rgba(0, 56, 101, 0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 56, 101, 0.08); background: var(--primary-hover); }
+        .card h3 { font-size: 1.25rem; color: var(--text-dark); margin-bottom: 15px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .card h3::before { content: ''; display: block; width: 8px; height: 8px; background: var(--accent-red); border-radius: 50%; }
+        .card p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.6; }
 
-        ul.custom-list { list-style: none; margin-bottom: 15px; }
-        ul.custom-list li { position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-gray); font-size: 0.95rem; }
-        ul.custom-list li::before { content: '■'; position: absolute; left: 0; color: var(--primary-blue); font-size: 0.7rem; top: 4px; }
-        ul.custom-list.impact-list li::before { content: '✓'; color: var(--accent-red); font-size: 0.9rem; top: 0; }
+        ul.custom-list { list-style: none; margin-top: 15px; }
+        ul.custom-list li { position: relative; padding-left: 22px; margin-bottom: 10px; color: var(--text-gray); font-size: 0.95rem; }
+        ul.custom-list li::before { content: '✓'; position: absolute; left: 0; color: var(--primary-blue); font-weight: bold; }
 
-        /* Block de Highlights */
-        .highlight-block { background: var(--bg-white); border-left: 4px solid var(--accent-red); padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border-radius: 0 12px 12px 0; margin-bottom: 30px; }
-        .highlight-block h4 { font-size: 1.1rem; color: var(--primary-blue); margin-bottom: 10px; }
-
-        /* Timeline & Presupuesto */
-        .deliv-budget-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+        /* Timeline & Budget */
+        .deliv-budget-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; margin-top: 60px; }
         
-        .timeline-wrapper { background: var(--bg-white); padding: 40px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
-        .timeline-wrapper h3 { margin-bottom: 10px; font-size: 1.5rem; color: var(--primary-blue); }
-        .timeline-disclaimer { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 30px; padding-left: 15px; border-left: 3px solid var(--accent-red); font-style: italic; line-height: 1.5; }
-        
-        .timeline-flex { display: flex; flex-direction: column; gap: 15px; }
-        .time-block { background: var(--bg-gray); border-left: 4px solid var(--primary-blue); padding: 20px; border-radius: 0 8px 8px 0; display: flex; justify-content: space-between; align-items: center; }
-        .time-block.accent { border-left-color: var(--accent-red); background: rgba(227, 0, 15, 0.03); }
-        .time-block h4 { font-size: 1rem; color: var(--text-dark); margin: 0;}
-        .time-block span { font-size: 0.85rem; color: var(--text-gray); font-weight: 500; background: white; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); }
+        .entregables-col { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+        .entregables-col h3 { font-size: 1.4rem; margin-bottom: 25px; color: var(--primary-blue); }
 
-        .budget-card { background: var(--primary-blue); color: white; border-radius: 16px; padding: 40px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
-        .budget-card::before { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.05); border-radius: 50%; }
-        .budget-card > h3 { font-size: 1.5rem; margin-bottom: 25px; font-weight: 600; color: white; }
-        .price-breakdown { padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); width: 100%; }
-        .price-row { display: flex; justify-content: space-between; margin-bottom: 15px; color: rgba(255,255,255,0.8); font-size: 1rem; }
-        .price-row strong { color: white; font-weight: 500; }
-        .price-row.total { margin-top: 20px; padding-top: 20px; border-top: 2px solid white; color: white; font-weight: 700; font-size: 1.5rem; align-items: center; }
+        .budget-card { background: var(--bg-gray); border: 1px solid var(--border); border-radius: 12px; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+        .budget-card h3 { font-size: 1.4rem; margin-bottom: 25px; font-weight: 600; text-align: center; color: var(--primary-blue); }
+        .price-breakdown { padding-top: 20px; border-top: 1px solid var(--border); width: 100%; }
+        .price-row { display: flex; justify-content: space-between; margin-bottom: 12px; color: var(--text-gray); font-size: 1rem; }
+        .price-row.total { margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--primary-blue); color: var(--text-dark); font-weight: 700; font-size: 1.6rem; align-items: center; }
 
-        /* ================= LEGAL & DISCLAIMED INFO ================= */
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .info-box { background: var(--bg-white); border: 1px solid var(--border); border-top: 4px solid var(--text-dark); padding: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
-        .info-box.warning { border-top-color: var(--accent-red); }
-        .info-box h4 { font-size: 1.2rem; margin-bottom: 15px; color: var(--text-dark); }
-        .info-box p { color: var(--text-gray); font-size: 0.95rem; margin-bottom: 10px; }
+        .timeline-wrapper { margin-top: 60px; background: var(--bg-white); padding: 40px; border-radius: 12px; border: 1px solid var(--border); }
+        .timeline-wrapper h3 { margin-bottom: 25px; font-size: 1.4rem; color: var(--primary-blue); }
+        .timeline-flex { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px; }
+        .time-block { flex: 1; min-width: 220px; background: var(--bg-gray); border-top: 4px solid var(--primary-blue); padding: 25px 20px; border-radius: 0 0 8px 8px; }
+        .time-block.accent { border-top-color: var(--accent-red); background: rgba(227, 0, 15, 0.03); }
+        .time-block h4 { font-size: 1.05rem; margin-bottom: 8px; color: var(--text-dark); }
+        .time-block p { font-size: 0.9rem; color: var(--text-gray); }
+
+        /* Legal Boxes */
+        .info-box { background: var(--bg-white); border: 1px solid var(--border); border-left: 4px solid var(--primary-blue); padding: 30px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .info-box.warning { border-left-color: var(--accent-red); }
+        .info-box h4 { font-size: 1.2rem; margin-bottom: 10px; color: var(--text-dark); }
+        .info-box p { color: var(--text-gray); font-size: 0.95rem; }
 
         /* ================= FOOTER ================= */
-        footer { background: var(--text-dark); padding: 40px 10%; text-align: center; color: white; }
-        footer p { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
-        footer a { color: white; text-decoration: underline; }
-        .footer-contact { margin-top: 15px; font-size: 0.95rem; color: white; font-weight: 500; }
+        footer { background: var(--bg-gray); padding: 40px 10%; text-align: center; border-top: 1px solid var(--border); }
+        footer p, .footer-contact { color: var(--text-gray); font-size: 0.95rem; font-weight: 400; }
+        footer a { color: var(--primary-blue); font-weight: 600; }
+        .footer-contact { margin-top: 10px; }
 
         /* ================= MOBILE OPTIMIZATION ================= */
+        @media (max-width: 900px) {
+            .deliv-budget-grid { grid-template-columns: 1fr; gap: 30px; }
+        }
         @media (max-width: 768px) {
-            header { flex-direction: column; gap: 20px; padding: 20px 5%; align-items: center; }
-            .header-right { width: 100%; justify-content: center; }
-            nav ul { flex-wrap: wrap; justify-content: center; gap: 15px; }
-            
-            .hero { flex-direction: column; text-align: center; padding: 60px 5%; gap: 30px; }
+            header { flex-direction: column; gap: 15px; }
+            .hero { flex-direction: column; text-align: center; padding: 60px 5%; }
             .hero-right h1 { font-size: 2.2rem; }
-            
             section { padding: 60px 5%; }
-            .deliv-budget-grid, .info-grid { grid-template-columns: 1fr; gap: 20px; }
-            .budget-card, .timeline-wrapper { padding: 30px 20px; }
+            .section-header h2 { font-size: 1.6rem; flex-direction: column; align-items: flex-start; gap: 10px; }
+            .timeline-flex { flex-direction: column; }
+            .time-block { border-top: none; border-left: 4px solid var(--primary-blue); border-radius: 0 8px 8px 0; }
+            .time-block.accent { border-left-color: var(--accent-red); }
         }
     </style>
 </head>
@@ -132,12 +130,18 @@
         <div class="header-right">
             <nav>
                 <ul>
-                    <li><a href="#enfoque">Enfoque</a></li>
-                    <li><a href="#entregables">Entregables</a></li>
-                    <li><a href="#presupuesto">Timeline & Presupuesto</a></li>
-                    <li><a href="#consideraciones">Consideraciones</a></li>
+                    <li><a href="#enfoque"><span class="lang es">Enfoque</span><span class="lang en hidden">Approach</span></a></li>
+                    <li><a href="#d1">D1</a></li>
+                    <li><a href="#d2">D2</a></li>
+                    <li><a href="#d3">D3</a></li>
+                    <li><a href="#d4">D4</a></li>
+                    <li><a href="#d5">D5</a></li>
                 </ul>
             </nav>
+            <div class="lang-switch">
+                <button onclick="setLang('es')" id="btn-es" class="active">ESP</button>
+                <button onclick="setLang('en')" id="btn-en">ENG</button>
+            </div>
         </div>
     </header>
 
@@ -146,274 +150,388 @@
             <img src="LogoCT.png" alt="Control Técnica">
         </div>
         <div class="hero-right">
-            <h1>Propuesta de Optimización y Estabilización WordPress</h1>
-            <p>Estrategia iterativa centrada en SEO, Performance y Experiencia de Usuario, priorizando el impacto directo en negocio y la estabilidad del site.</p>
+            <h1>
+                <span class="lang es">Optimización y Estabilización WordPress</span>
+                <span class="lang en hidden">WordPress Optimization & Stabilization</span>
+            </h1>
+            <p>
+                <span class="lang es">Estrategia iterativa centrada en SEO, Performance y Experiencia de Usuario, priorizando el impacto directo en negocio sin comprometer la estabilidad del site actual.</span>
+                <span class="lang en hidden">Iterative strategy focused on SEO, Performance, and UX, prioritizing direct business impact without compromising current site stability.</span>
+            </p>
         </div>
     </div>
 
-    <section id="enfoque" class="bg-gray">
+    <section id="enfoque">
         <div class="section-header">
-            <h2>Enfoque de Trabajo</h2>
-            <p>El proyecto se estructura para garantizar mejoras continuas sin poner en riesgo la operatividad actual de la plataforma.</p>
+            <h2><span class="lang es">Enfoque de Trabajo</span><span class="lang en hidden">Work Approach</span></h2>
+            <p><span class="lang es">Nuestra metodología se basa en bloques independientes (deliverables). Cada fase se ejecuta, valida y cierra de forma individual para asegurar calidad y control de riesgos.</span><span class="lang en hidden">Our methodology is based on independent blocks (deliverables). Each phase is executed, validated, and closed individually to ensure quality and risk control.</span></p>
         </div>
-
-        <div class="grid-container" style="margin-bottom: 40px;">
-            <div class="highlight-block">
-                <h4>Filosofía "Mejorar sin romper"</h4>
-                <p style="color: var(--text-gray); font-size: 0.95rem;">Trabajamos sobre quick wins y mejoras estructurales. Se prioriza el impacto inmediato utilizando entornos de staging siempre que sea posible para validación previa.</p>
+        <div class="grid-container">
+            <div class="card">
+                <h3><span class="lang es">Auditoría & Priorización</span><span class="lang en hidden">Audit & Prioritization</span></h3>
+                <p><span class="lang es">Análisis inicial técnico y funcional. Priorización de tareas según la matriz de impacto vs. esfuerzo.</span><span class="lang en hidden">Initial technical and functional analysis. Task prioritization based on the impact vs. effort matrix.</span></p>
             </div>
-            <div class="highlight-block">
-                <h4>Entregas Independientes</h4>
-                <p style="color: var(--text-gray); font-size: 0.95rem;">El proyecto se divide en bloques (deliverables) independientes. Cada fase se ejecuta, se valida de forma continua con el cliente y se cierra antes de avanzar.</p>
+            <div class="card">
+                <h3><span class="lang es">Ejecución en Staging</span><span class="lang en hidden">Staging Execution</span></h3>
+                <p><span class="lang es">Desarrollo iterativo en un entorno de pruebas seguro para asegurar la premisa de "mejorar sin romper".</span><span class="lang en hidden">Iterative development in a secure staging environment to ensure the "improve without breaking" premise.</span></p>
             </div>
-        </div>
-
-        <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-            <div class="card" style="padding: 25px;">
-                <h3 style="font-size: 1.1rem; margin-bottom: 10px;">1. Auditoría</h3>
-                <p style="font-size: 0.9rem; margin:0;">Auditoría inicial técnica y funcional profunda del entorno.</p>
-            </div>
-            <div class="card" style="padding: 25px;">
-                <h3 style="font-size: 1.1rem; margin-bottom: 10px;">2. Priorización</h3>
-                <p style="font-size: 0.9rem; margin:0;">Organización de tareas basada en la matriz de impacto vs esfuerzo.</p>
-            </div>
-            <div class="card" style="padding: 25px;">
-                <h3 style="font-size: 1.1rem; margin-bottom: 10px;">3. Ejecución</h3>
-                <p style="font-size: 0.9rem; margin:0;">Desarrollo iterativo en entorno de pruebas (Staging).</p>
-            </div>
-            <div class="card" style="padding: 25px;">
-                <h3 style="font-size: 1.1rem; margin-bottom: 10px;">4. Validación</h3>
-                <p style="font-size: 0.9rem; margin:0;">Revisión conjunta, validación y paso a producción (Live).</p>
+            <div class="card">
+                <h3><span class="lang es">Validación Continua</span><span class="lang en hidden">Continuous Validation</span></h3>
+                <p><span class="lang es">Comunicación constante con el cliente para la validación de cada entregable antes de su paso a producción.</span><span class="lang en hidden">Constant communication with the client to validate each deliverable before going live.</span></p>
             </div>
         </div>
     </section>
 
-    <section id="entregables">
+    <section id="d1" class="bg-gray">
         <div class="section-header">
-            <h2>Scope & Deliverables</h2>
-            <p>Desglose de los 5 bloques de trabajo principales definidos para la estabilización y optimización de la plataforma.</p>
+            <h2><span class="badge">Deliverable 1</span> <span class="lang es">Product Pages Consolidation</span><span class="lang en hidden">Product Pages Consolidation</span></h2>
+            <p><span class="lang es">Unificación y limpieza profunda del sistema de productos actuales en la web.</span><span class="lang en hidden">Unification and deep cleanup of the current product system on the website.</span></p>
         </div>
 
         <div class="grid-container">
             <div class="card">
-                <span class="card-badge">Deliverable 1</span>
-                <h3>Product Pages Consolidation</h3>
-                <p>Unificación y limpieza del sistema de productos.</p>
-                
-                <h4 class="card-subtitle">Qué incluye:</h4>
+                <h3><span class="lang es">Alcance Técnico</span><span class="lang en hidden">Technical Scope</span></h3>
                 <ul class="custom-list">
-                    <li>Consolidación en un único template de producto.</li>
-                    <li>Eliminación de inconsistencias entre páginas.</li>
-                    <li>Limpieza del catálogo (duplicados, estructura, lógica).</li>
-                    <li>Mejora de mantenibilidad del sistema.</li>
-                </ul>
-
-                <h4 class="card-subtitle">Impacto en negocio:</h4>
-                <ul class="custom-list impact-list">
-                    <li>Escalabilidad futura garantizada.</li>
-                    <li>Reducción drástica de errores.</li>
-                    <li>Mejora SEO estructural de cara a Google.</li>
+                    <li><span class="lang es">Consolidación en un único template de producto.</span><span class="lang en hidden">Consolidation into a single product template.</span></li>
+                    <li><span class="lang es">Eliminación de inconsistencias entre páginas.</span><span class="lang en hidden">Elimination of inconsistencies between pages.</span></li>
+                    <li><span class="lang es">Limpieza del catálogo (duplicados y lógica).</span><span class="lang en hidden">Catalog cleanup (duplicates and logic).</span></li>
                 </ul>
             </div>
-
             <div class="card">
-                <span class="card-badge">Deliverable 2</span>
-                <h3>Documentación interna</h3>
-                <p>Creación de documentación clara para la gestión interna del producto.</p>
-                
-                <h4 class="card-subtitle">Qué incluye:</h4>
+                <h3><span class="lang es">Impacto en Negocio</span><span class="lang en hidden">Business Impact</span></h3>
                 <ul class="custom-list">
-                    <li>Guía paso a paso de creación y edición de productos.</li>
-                    <li>Buenas prácticas de carga de contenido.</li>
-                    <li>Estructura de jerarquías recomendada.</li>
-                    <li>Flujo de actualizaciones (updates).</li>
-                </ul>
-
-                <h4 class="card-subtitle">Impacto en negocio:</h4>
-                <ul class="custom-list impact-list">
-                    <li>Autonomía total del equipo interno.</li>
-                    <li>Menos dependencia técnica del equipo de desarrollo.</li>
-                    <li>Consistencia a largo plazo en el catálogo.</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <span class="card-badge">Deliverable 3</span>
-                <h3>SEO On-Site</h3>
-                <p>Optimización técnica SEO profunda de la web.</p>
-                
-                <h4 class="card-subtitle">Qué incluye:</h4>
-                <ul class="custom-list">
-                    <li>Generación de Sitemap optimizado.</li>
-                    <li>Revisión exhaustiva de páginas indexadas.</li>
-                    <li>Mejora de estructura de URLs.</li>
-                    <li>Implementación de datos estructurados (Schema).</li>
-                    <li>Optimización de Meta titles & descriptions.</li>
-                    <li>Etiquetado Alt text en imágenes clave.</li>
-                </ul>
-
-                <h4 class="card-subtitle">Impacto en negocio:</h4>
-                <ul class="custom-list impact-list">
-                    <li>Mejor indexación y rastreo por buscadores.</li>
-                    <li>Aumento sostenido de tráfico orgánico.</li>
-                    <li>Mejora de posiciones (rankings) en SERPs.</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <span class="card-badge">Deliverable 4</span>
-                <h3>Performance Optimization</h3>
-                <p>Optimización de velocidad de carga basada en métricas de Lighthouse.</p>
-                
-                <h4 class="card-subtitle">Qué incluye:</h4>
-                <ul class="custom-list">
-                    <li>Compresión y optimización de formato de imágenes.</li>
-                    <li>Limpieza y desactivación de plugins innecesarios.</li>
-                    <li>Eliminación de páginas duplicadas/zombie.</li>
-                    <li>Mejora general de performance del servidor/caché.</li>
-                </ul>
-
-                <h4 class="card-subtitle">Impacto en negocio:</h4>
-                <ul class="custom-list impact-list">
-                    <li>Mejor experiencia de usuario (carga instantánea).</li>
-                    <li>Mejora SEO directa (Core Web Vitals).</li>
-                    <li>Reducción de la tasa de rebote (bounce rate).</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <span class="card-badge">Deliverable 5</span>
-                <h3>Urgent Front-End Fixes</h3>
-                <p>Corrección de issues críticos de Interfaz y UX.</p>
-                
-                <h4 class="card-subtitle">Qué incluye:</h4>
-                <ul class="custom-list">
-                    <li>Identificación y fix de broken links (404s).</li>
-                    <li>Corrección del botón Home / Portugal.</li>
-                    <li>Optimización de visualización en Mobile.</li>
-                    <li>Mejora del flujo en formularios de contacto.</li>
-                </ul>
-
-                <h4 class="card-subtitle">Impacto en negocio:</h4>
-                <ul class="custom-list impact-list">
-                    <li>Mejora inmediata en la tasa de conversión.</li>
-                    <li>Reducción de puntos de fricción para el usuario.</li>
-                    <li>Estabilidad general percibida del site.</li>
+                    <li><span class="lang es">Escalabilidad futura garantizada.</span><span class="lang en hidden">Guaranteed future scalability.</span></li>
+                    <li><span class="lang es">Reducción drástica de errores.</span><span class="lang en hidden">Drastic reduction in errors.</span></li>
+                    <li><span class="lang es">Mejora SEO estructural de la tienda.</span><span class="lang en hidden">Structural SEO improvement for the store.</span></li>
                 </ul>
             </div>
         </div>
-    </section>
 
-    <section id="presupuesto" class="bg-gray">
-        <div class="section-header">
-            <h2>Timeline & Presupuesto</h2>
-            <p>Modelo transparente de pago por fase completada. Avanzamos y facturamos bloque a bloque tras su validación.</p>
+        <div class="timeline-wrapper">
+            <h3><span class="lang es">Cronograma Estimado</span><span class="lang en hidden">Estimated Timeline</span></h3>
+            <div class="timeline-flex">
+                <div class="time-block">
+                    <h4><span class="lang es">Fase 1: Implementación</span><span class="lang en hidden">Phase 1: Implementation</span></h4>
+                    <p><span class="lang es">Desarrollo y unificación en entorno Staging.</span><span class="lang en hidden">Development and unification in Staging environment.</span></p>
+                </div>
+                <div class="time-block">
+                    <h4><span class="lang es">Fase 2: Revisión</span><span class="lang en hidden">Phase 2: Review</span></h4>
+                    <p><span class="lang es">QA interno y ajustes técnicos.</span><span class="lang en hidden">Internal QA and technical adjustments.</span></p>
+                </div>
+                <div class="time-block accent">
+                    <h4><span class="lang es">Fase 3: Validación</span><span class="lang en hidden">Phase 3: Validation</span></h4>
+                    <p><span class="lang es">Revisión con cliente y despliegue a Live.</span><span class="lang en hidden">Client review and deployment to Live.</span></p>
+                </div>
+            </div>
         </div>
 
         <div class="deliv-budget-grid">
-            
-            <div class="timeline-wrapper">
-                <h3>Cronograma de Ejecución</h3>
-                <div class="timeline-disclaimer">
-                    Tiempo total estimado del proyecto: <strong>[XXXX Semanas/Meses]</strong>. <br>El ritmo de entrega puede ajustarse según la validación del cliente en cada fase.
-                </div>
-                
-                <div class="timeline-flex">
-                    <div class="time-block">
-                        <h4>Fase de Implementación</h4>
-                        <span>Desarrollo</span>
-                    </div>
-                    <div class="time-block">
-                        <h4>Fase de Revisión</h4>
-                        <span>QA & Staging</span>
-                    </div>
-                    <div class="time-block accent">
-                        <h4>Fase de Validación</h4>
-                        <span>Cliente & Pase a Live</span>
-                    </div>
-                </div>
-                <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-gray);"><em>* Este ciclo de 3 pasos se repite de forma rigurosa por cada Deliverable independiente.</em></p>
+            <div class="entregables-col">
+                <h3><span class="lang es">Entregables Finales</span><span class="lang en hidden">Final Deliverables</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Template unificado funcional en WordPress.</span><span class="lang en hidden">Unified functional template in WordPress.</span></li>
+                    <li><span class="lang es">Catálogo depurado sin inconsistencias.</span><span class="lang en hidden">Cleaned catalog without inconsistencies.</span></li>
+                </ul>
             </div>
-
             <div class="budget-card">
-                <h3>Inversión por Entregable</h3>
+                <h3><span class="lang es">Presupuesto D1</span><span class="lang en hidden">D1 Budget</span></h3>
                 <div class="price-breakdown">
-                    <div class="price-row">
-                        <span>D1: Product Consolidation</span>
-                        <strong>€X</strong>
-                    </div>
-                    <div class="price-row">
-                        <span>D2: Documentación Interna</span>
-                        <strong>€X</strong>
-                    </div>
-                    <div class="price-row">
-                        <span>D3: SEO Improvements</span>
-                        <strong>€X</strong>
-                    </div>
-                    <div class="price-row">
-                        <span>D4: Performance & Speed</span>
-                        <strong>€X</strong>
-                    </div>
-                    <div class="price-row">
-                        <span>D5: Front-end Fixes</span>
-                        <strong>€X</strong>
-                    </div>
-                    <div class="price-row total">
-                        <span>Total Proyecto</span>
-                        <span>€XXXX</span>
-                    </div>
+                    <div class="price-row"><span><span class="lang es">Base Imponible</span><span class="lang en hidden">Subtotal</span></span><span>X€</span></div>
+                    <div class="price-row"><span><span class="lang es">IVA (21%)</span><span class="lang en hidden">VAT (21%)</span></span><span>X€</span></div>
+                    <div class="price-row total"><span>Total</span><span>X€</span></div>
                 </div>
-                <p style="text-align: right; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 15px;">
-                    * Precios sin IVA. Pago por deliverable completado y validado.
-                </p>
             </div>
-
         </div>
     </section>
 
-    <section id="consideraciones">
+    <section id="d2">
         <div class="section-header">
-            <h2>Avisos & Disclaimers</h2>
-            <p>Consideraciones técnicas, legales y de gestión a tener en cuenta durante la ejecución del proyecto.</p>
+            <h2><span class="badge">Deliverable 2</span> <span class="lang es">Documentación Interna</span><span class="lang en hidden">Internal Documentation</span></h2>
+            <p><span class="lang es">Creación de documentación clara para la gestión y autonomía del equipo interno.</span><span class="lang en hidden">Creation of clear documentation for the management and autonomy of the internal team.</span></p>
         </div>
 
-        <div class="info-grid">
-            <div class="info-box warning">
-                <h4>Deuda Técnica y Riesgos</h4>
-                <p>Al auditar proyectos ya construidos, puede existir <strong>deuda técnica no visible</strong> inicialmente.</p>
-                <ul class="custom-list" style="margin-top: 15px;">
-                    <li>Posibilidad de encontrar configuraciones ocultas, dependencias críticas entre plugins o código legacy no documentado.</li>
-                    <li><strong>Riesgos:</strong> Limitaciones de los plugins instalados o que cambios en un área afecten otras partes del site.</li>
-                    <li><strong>Mitigación:</strong> Trabajo estricto en staging, generación de backups previos a cambios críticos e iteraciones controladas.</li>
+        <div class="grid-container">
+            <div class="card">
+                <h3><span class="lang es">Alcance Técnico</span><span class="lang en hidden">Technical Scope</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Guía de creación y edición de productos.</span><span class="lang en hidden">Product creation and editing guide.</span></li>
+                    <li><span class="lang es">Buenas prácticas de contenido y SEO básico.</span><span class="lang en hidden">Content best practices and basic SEO.</span></li>
+                    <li><span class="lang es">Estructura recomendada y flujo de updates.</span><span class="lang en hidden">Recommended structure and update flow.</span></li>
                 </ul>
             </div>
+            <div class="card">
+                <h3><span class="lang es">Impacto en Negocio</span><span class="lang en hidden">Business Impact</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Autonomía total del equipo interno.</span><span class="lang en hidden">Total autonomy for the internal team.</span></li>
+                    <li><span class="lang es">Menos dependencia técnica de agencia.</span><span class="lang en hidden">Less technical dependency on the agency.</span></li>
+                    <li><span class="lang es">Consistencia visual a lo largo del tiempo.</span><span class="lang en hidden">Visual consistency over time.</span></li>
+                </ul>
+            </div>
+        </div>
 
-            <div class="info-box">
-                <h4>Condiciones del Servicio</h4>
-                <ul class="custom-list" style="margin-top: 10px;">
-                    <li>
-                        <strong style="color: var(--text-dark);">Aviso Legal y Privacidad:</strong> 
-                        La implementación de algunos cambios (ej. analítica) puede requerir la actualización obligatoria de la Política de Privacidad y el Aviso de Cookies de la web para cumplir con el RGPD.
-                    </li>
-                    <li style="margin-top: 20px;">
-                        <strong style="color: var(--text-dark);">Costes de Terceros:</strong> 
-                        Esta propuesta incluye exclusivamente nuestros honorarios de desarrollo. No incluye costes derivados de plataformas de terceros (servidores, APIs, inversión publicitaria, licencias premium de plugins, etc.).
-                    </li>
-                    <li style="margin-top: 20px;">
-                        <strong style="color: var(--text-dark);">Contrato y Pagos:</strong> 
-                        Una vez validada y aceptada esta propuesta, se redactará un contrato formal de servicios detallando los hitos exactos de entrega y el calendario de pagos.
-                    </li>
+        <div class="timeline-wrapper">
+            <h3><span class="lang es">Cronograma Estimado</span><span class="lang en hidden">Estimated Timeline</span></h3>
+            <div class="timeline-flex">
+                <div class="time-block">
+                    <h4><span class="lang es">Fase 1: Redacción</span><span class="lang en hidden">Phase 1: Drafting</span></h4>
+                    <p><span class="lang es">Creación de manuales basados en el nuevo template.</span><span class="lang en hidden">Creation of manuals based on the new template.</span></p>
+                </div>
+                <div class="time-block">
+                    <h4><span class="lang es">Fase 2: Revisión</span><span class="lang en hidden">Phase 2: Review</span></h4>
+                    <p><span class="lang es">Ajustes según flujos de trabajo del cliente.</span><span class="lang en hidden">Adjustments based on client workflows.</span></p>
+                </div>
+                <div class="time-block accent">
+                    <h4><span class="lang es">Fase 3: Entrega</span><span class="lang en hidden">Phase 3: Delivery</span></h4>
+                    <p><span class="lang es">Entrega de assets y resolución de dudas.</span><span class="lang en hidden">Asset delivery and Q&A.</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="deliv-budget-grid">
+            <div class="entregables-col">
+                <h3><span class="lang es">Entregables Finales</span><span class="lang en hidden">Final Deliverables</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Manual corporativo en formato PDF / Notion.</span><span class="lang en hidden">Corporate manual in PDF / Notion format.</span></li>
                 </ul>
             </div>
+            <div class="budget-card">
+                <h3><span class="lang es">Presupuesto D2</span><span class="lang en hidden">D2 Budget</span></h3>
+                <div class="price-breakdown">
+                    <div class="price-row"><span><span class="lang es">Base Imponible</span><span class="lang en hidden">Subtotal</span></span><span>X€</span></div>
+                    <div class="price-row"><span><span class="lang es">IVA (21%)</span><span class="lang en hidden">VAT (21%)</span></span><span>X€</span></div>
+                    <div class="price-row total"><span>Total</span><span>X€</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="d3" class="bg-gray">
+        <div class="section-header">
+            <h2><span class="badge">Deliverable 3</span> <span class="lang es">SEO On-Site</span><span class="lang en hidden">On-Site SEO</span></h2>
+            <p><span class="lang es">Optimización técnica profunda para mejorar el posicionamiento orgánico en Google.</span><span class="lang en hidden">Deep technical optimization to improve organic ranking on Google.</span></p>
+        </div>
+
+        <div class="grid-container">
+            <div class="card">
+                <h3><span class="lang es">Alcance Técnico</span><span class="lang en hidden">Technical Scope</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Sitemap optimizado y revisión de indexación.</span><span class="lang en hidden">Optimized sitemap and indexing review.</span></li>
+                    <li><span class="lang es">Mejora de URLs e implementación de Schema.</span><span class="lang en hidden">URL improvement and Schema implementation.</span></li>
+                    <li><span class="lang es">Optimización de Meta Titles, Descriptions y Alt text.</span><span class="lang en hidden">Meta Titles, Descriptions, and Alt text optimization.</span></li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3><span class="lang es">Impacto en Negocio</span><span class="lang en hidden">Business Impact</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Mejor rastreo e indexación por buscadores.</span><span class="lang en hidden">Better crawling and indexing by search engines.</span></li>
+                    <li><span class="lang es">Aumento constante del tráfico orgánico.</span><span class="lang en hidden">Steady increase in organic traffic.</span></li>
+                    <li><span class="lang es">Mejora de rankings en palabras clave.</span><span class="lang en hidden">Keyword ranking improvements.</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="timeline-wrapper">
+            <h3><span class="lang es">Cronograma Estimado</span><span class="lang en hidden">Estimated Timeline</span></h3>
+            <div class="timeline-flex">
+                <div class="time-block">
+                    <h4><span class="lang es">Fase 1: Auditoría SEO</span><span class="lang en hidden">Phase 1: SEO Audit</span></h4>
+                    <p><span class="lang es">Extracción de errores de Search Console.</span><span class="lang en hidden">Extraction of errors from Search Console.</span></p>
+                </div>
+                <div class="time-block">
+                    <h4><span class="lang es">Fase 2: Implementación</span><span class="lang en hidden">Phase 2: Implementation</span></h4>
+                    <p><span class="lang es">Corrección masiva On-Site.</span><span class="lang en hidden">Massive On-Site correction.</span></p>
+                </div>
+                <div class="time-block accent">
+                    <h4><span class="lang es">Fase 3: Validación</span><span class="lang en hidden">Phase 3: Validation</span></h4>
+                    <p><span class="lang es">Re-indexación y comprobación.</span><span class="lang en hidden">Re-indexing and verification.</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="deliv-budget-grid">
+            <div class="entregables-col">
+                <h3><span class="lang es">Entregables Finales</span><span class="lang en hidden">Final Deliverables</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Web 100% optimizada a nivel técnico SEO.</span><span class="lang en hidden">Website 100% optimized at a technical SEO level.</span></li>
+                    <li><span class="lang es">Reporte de métricas iniciales vs. finales.</span><span class="lang en hidden">Report of initial vs. final metrics.</span></li>
+                </ul>
+            </div>
+            <div class="budget-card">
+                <h3><span class="lang es">Presupuesto D3</span><span class="lang en hidden">D3 Budget</span></h3>
+                <div class="price-breakdown">
+                    <div class="price-row"><span><span class="lang es">Base Imponible</span><span class="lang en hidden">Subtotal</span></span><span>X€</span></div>
+                    <div class="price-row"><span><span class="lang es">IVA (21%)</span><span class="lang en hidden">VAT (21%)</span></span><span>X€</span></div>
+                    <div class="price-row total"><span>Total</span><span>X€</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="d4">
+        <div class="section-header">
+            <h2><span class="badge">Deliverable 4</span> <span class="lang es">Performance Optimization</span><span class="lang en hidden">Performance Optimization</span></h2>
+            <p><span class="lang es">Mejora de la velocidad de carga basada en las métricas core de Lighthouse.</span><span class="lang en hidden">Load speed improvement based on Lighthouse core metrics.</span></p>
+        </div>
+
+        <div class="grid-container">
+            <div class="card">
+                <h3><span class="lang es">Alcance Técnico</span><span class="lang en hidden">Technical Scope</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Optimización y compresión de imágenes.</span><span class="lang en hidden">Image optimization and compression.</span></li>
+                    <li><span class="lang es">Limpieza de plugins innecesarios.</span><span class="lang en hidden">Cleanup of unnecessary plugins.</span></li>
+                    <li><span class="lang es">Eliminación de páginas duplicadas y ajuste de Caché.</span><span class="lang en hidden">Elimination of duplicate pages and Cache tuning.</span></li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3><span class="lang es">Impacto en Negocio</span><span class="lang en hidden">Business Impact</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Mejor experiencia de usuario (UX fluida).</span><span class="lang en hidden">Better user experience (smooth UX).</span></li>
+                    <li><span class="lang es">Mejora indirecta SEO (Core Web Vitals).</span><span class="lang en hidden">Indirect SEO improvement (Core Web Vitals).</span></li>
+                    <li><span class="lang es">Reducción del porcentaje de rebote.</span><span class="lang en hidden">Reduction in bounce rate.</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="timeline-wrapper">
+            <h3><span class="lang es">Cronograma Estimado</span><span class="lang en hidden">Estimated Timeline</span></h3>
+            <div class="timeline-flex">
+                <div class="time-block">
+                    <h4><span class="lang es">Fase 1: Diagnóstico</span><span class="lang en hidden">Phase 1: Diagnostics</span></h4>
+                    <p><span class="lang es">Análisis profundo de cuellos de botella.</span><span class="lang en hidden">Deep analysis of bottlenecks.</span></p>
+                </div>
+                <div class="time-block">
+                    <h4><span class="lang es">Fase 2: Implementación</span><span class="lang en hidden">Phase 2: Implementation</span></h4>
+                    <p><span class="lang es">Ajustes a nivel servidor y CMS.</span><span class="lang en hidden">Adjustments at server and CMS level.</span></p>
+                </div>
+                <div class="time-block accent">
+                    <h4><span class="lang es">Fase 3: Validación</span><span class="lang en hidden">Phase 3: Validation</span></h4>
+                    <p><span class="lang es">Testeo de rendimiento final.</span><span class="lang en hidden">Final performance testing.</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="deliv-budget-grid">
+            <div class="entregables-col">
+                <h3><span class="lang es">Entregables Finales</span><span class="lang en hidden">Final Deliverables</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Web rápida y optimizada para navegadores móviles/desktop.</span><span class="lang en hidden">Fast and optimized web for mobile/desktop browsers.</span></li>
+                    <li><span class="lang es">Reporte Lighthouse (Antes vs. Después).</span><span class="lang en hidden">Lighthouse Report (Before vs. After).</span></li>
+                </ul>
+            </div>
+            <div class="budget-card">
+                <h3><span class="lang es">Presupuesto D4</span><span class="lang en hidden">D4 Budget</span></h3>
+                <div class="price-breakdown">
+                    <div class="price-row"><span><span class="lang es">Base Imponible</span><span class="lang en hidden">Subtotal</span></span><span>X€</span></div>
+                    <div class="price-row"><span><span class="lang es">IVA (21%)</span><span class="lang en hidden">VAT (21%)</span></span><span>X€</span></div>
+                    <div class="price-row total"><span>Total</span><span>X€</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="d5" class="bg-gray">
+        <div class="section-header">
+            <h2><span class="badge">Deliverable 5</span> <span class="lang es">Urgent Front-End Fixes</span><span class="lang en hidden">Urgent Front-End Fixes</span></h2>
+            <p><span class="lang es">Corrección de problemas críticos de interfaz (UX/UI) de alto impacto.</span><span class="lang en hidden">Correction of critical high-impact interface (UX/UI) issues.</span></p>
+        </div>
+
+        <div class="grid-container">
+            <div class="card">
+                <h3><span class="lang es">Alcance Técnico</span><span class="lang en hidden">Technical Scope</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Reparación de broken links (404).</span><span class="lang en hidden">Repair of broken links (404).</span></li>
+                    <li><span class="lang es">Corrección del botón Home / Portugal.</span><span class="lang en hidden">Correction of the Home / Portugal button.</span></li>
+                    <li><span class="lang es">Mejora del flujo en formularios de contacto.</span><span class="lang en hidden">Flow improvement in contact forms.</span></li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3><span class="lang es">Impacto en Negocio</span><span class="lang en hidden">Business Impact</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Mejora inmediata en la tasa de conversión.</span><span class="lang en hidden">Immediate improvement in conversion rate.</span></li>
+                    <li><span class="lang es">Reducción total de fricciones del usuario.</span><span class="lang en hidden">Total reduction of user frictions.</span></li>
+                    <li><span class="lang es">Estabilidad general percibida de la marca.</span><span class="lang en hidden">Perceived general brand stability.</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="timeline-wrapper">
+            <h3><span class="lang es">Cronograma Estimado</span><span class="lang en hidden">Estimated Timeline</span></h3>
+            <div class="timeline-flex">
+                <div class="time-block">
+                    <h4><span class="lang es">Fase 1: Identificación</span><span class="lang en hidden">Phase 1: Identification</span></h4>
+                    <p><span class="lang es">Mapeo de errores front-end urgentes.</span><span class="lang en hidden">Mapping of urgent front-end errors.</span></p>
+                </div>
+                <div class="time-block">
+                    <h4><span class="lang es">Fase 2: Implementación</span><span class="lang en hidden">Phase 2: Implementation</span></h4>
+                    <p><span class="lang es">Fixes rápidos y precisos en Staging.</span><span class="lang en hidden">Quick and precise fixes in Staging.</span></p>
+                </div>
+                <div class="time-block accent">
+                    <h4><span class="lang es">Fase 3: Validación</span><span class="lang en hidden">Phase 3: Validation</span></h4>
+                    <p><span class="lang es">Pase a producción tras el OK del cliente.</span><span class="lang en hidden">Move to production after client OK.</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="deliv-budget-grid">
+            <div class="entregables-col">
+                <h3><span class="lang es">Entregables Finales</span><span class="lang en hidden">Final Deliverables</span></h3>
+                <ul class="custom-list">
+                    <li><span class="lang es">Navegación web sin puntos ciegos ni errores visuales.</span><span class="lang en hidden">Web navigation without blind spots or visual errors.</span></li>
+                    <li><span class="lang es">Formularios y CTAs validados y operativos al 100%.</span><span class="lang en hidden">Forms and CTAs validated and 100% operational.</span></li>
+                </ul>
+            </div>
+            <div class="budget-card">
+                <h3><span class="lang es">Presupuesto D5</span><span class="lang en hidden">D5 Budget</span></h3>
+                <div class="price-breakdown">
+                    <div class="price-row"><span><span class="lang es">Base Imponible</span><span class="lang en hidden">Subtotal</span></span><span>X€</span></div>
+                    <div class="price-row"><span><span class="lang es">IVA (21%)</span><span class="lang en hidden">VAT (21%)</span></span><span>X€</span></div>
+                    <div class="price-row total"><span>Total</span><span>X€</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="disclaimers">
+        <div class="section-header">
+            <h2><span class="lang es">Avisos & Disclaimers</span><span class="lang en hidden">Notices & Disclaimers</span></h2>
+            <p><span class="lang es">Consideraciones técnicas y legales aplicables a la propuesta.</span><span class="lang en hidden">Technical and legal considerations applicable to the proposal.</span></p>
+        </div>
+
+        <div class="info-box warning">
+            <h4><span class="lang es">Deuda Técnica en Proyectos Existentes</span><span class="lang en hidden">Technical Debt in Existing Projects</span></h4>
+            <p><span class="lang es">Al trabajar sobre un WordPress pre-existente, puede existir deuda técnica no visible (código legacy, conflictos de plugins no documentados). Nos comprometemos a mitigar cualquier riesgo utilizando entornos de prueba y backups periódicos.</span><span class="lang en hidden">When working on a pre-existing WordPress, there may be hidden technical debt (legacy code, undocumented plugin conflicts). We commit to mitigating any risk using test environments and regular backups.</span></p>
+        </div>
+        
+        <div class="info-box">
+            <h4><span class="lang es">Costes de Terceros y Plataformas</span><span class="lang en hidden">Third-Party and Platform Costs</span></h4>
+            <p><span class="lang es">Esta propuesta incluye exclusivamente nuestros honorarios de servicio técnico. No asume costes externos como renovaciones de hosting, dominios, licencias premium de plugins o herramientas de pago de terceros.</span><span class="lang en hidden">This proposal includes exclusively our technical service fees. It does not assume external costs such as hosting renewals, domains, premium plugin licenses, or third-party paid tools.</span></p>
+        </div>
+
+        <div class="info-box">
+            <h4><span class="lang es">Aviso Legal, RGPD y Contratos</span><span class="lang en hidden">Legal Notice, GDPR, and Contracts</span></h4>
+            <p><span class="lang es">Implementaciones vinculadas a analítica o formularios pueden requerir actualización de sus Políticas de Privacidad. Una vez aceptada esta propuesta, se redactará un contrato formal con los hitos de entrega y calendario de pagos definitivo.</span><span class="lang en hidden">Implementations linked to analytics or forms may require updating your Privacy Policies. Once this proposal is accepted, a formal contract will be drafted with the final delivery milestones and payment schedule.</span></p>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 <a href="https://loopdev.es/" target="_blank">Loop Development</a>. Propuesta preparada en exclusiva para Control Técnica.</p>
+        <p>
+            <span class="lang es">&copy; 2026 Loop Development. Propuesta preparada en exclusiva para Control Técnica.</span>
+            <span class="lang en hidden">&copy; 2026 Loop Development. Proposal prepared exclusively for Control Técnica.</span>
+        </p>
         <div class="footer-contact">
-            santiago@loopdev.es - (+34) 620 863 923
+            santiago@loopdev.es (+34) 620 863 923
         </div>
     </footer>
 
+    <script>
+        function setLang(lang) {
+            document.getElementById('btn-es').classList.remove('active');
+            document.getElementById('btn-en').classList.remove('active');
+            document.getElementById('btn-' + lang).classList.add('active');
+            
+            document.querySelectorAll('.lang').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.lang.' + lang).forEach(el => el.classList.remove('hidden'));
+        }
+    </script>
 </body>
 </html>
