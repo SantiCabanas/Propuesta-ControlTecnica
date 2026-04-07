@@ -3,607 +3,466 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Propuesta Estratégica | Control Técnica x Loop Development</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <title>Propuesta Web | Controltecnica BIO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ================= VARIABLES & RESET ================= */
         :root {
-            --bg-white: #FFFFFF;
-            --bg-gray: #FAFAFA;
-            --text-dark: #1A1A1A;
-            --text-gray: #6B7280;
-            --primary-blue: #003865;
-            --primary-soft: rgba(0, 56, 101, 0.04);
-            --primary-hover: rgba(0, 56, 101, 0.08);
-            --accent-red: #E3000F;
-            --border: #E5E7EB;
+            --bg-base: #F4F7F6;                   
+            --bg-white: #ffffff;                  
+            --bg-gray: #f0f4f8;                   
+            --text-headers: #102A43;              
+            --text-body: #334E68;                 
+            --accent: #005A9C;                    
+            --accent-light: rgba(0, 90, 156, 0.05);
+            --border: #D9E2EC;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg-white); color: var(--text-dark); line-height: 1.6; }
-        .hidden { display: none !important; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-base); color: var(--text-body); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; transition: color 0.3s ease; }
 
-        /* ================= HEADER & NAV ================= */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: var(--bg-white); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .logo-text { font-family: 'Poppins', sans-serif; font-size: 1.2rem; color: var(--text-dark); font-weight: 600; z-index: 1001; }
+        /* ================= ANIMATIONS ================= */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hover-3d {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+        }
+        .hover-3d:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 12px 25px rgba(16, 42, 67, 0.08);
+        }
+
+        /* ================= LAYOUT WRAPPER ================= */
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ================= HEADER ================= */
+        header { 
+            background: var(--bg-base); 
+            padding: 20px 5%; 
+            position: sticky; top: 0; z-index: 100; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03); 
+        }
+        .logo-text img {
+            max-height: 40px;
+        }
         
-        .header-right { display: flex; align-items: center; gap: 20px; transition: all 0.3s ease; }
-        nav ul { list-style: none; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
-        nav ul li a { color: var(--text-dark); font-size: 0.85rem; font-weight: 500; }
-        nav ul li a:hover { color: var(--accent-red); }
+        .desktop-nav { display: flex; align-items: center; gap: 30px; }
+        .desktop-nav ul { list-style: none; display: flex; gap: 25px; }
+        .desktop-nav ul li a { color: var(--text-headers); font-size: 0.95rem; font-weight: 600; }
+        .desktop-nav ul li a:hover { color: var(--accent); }
 
-        .lang-switch { display: flex; gap: 8px; font-size: 0.8rem; background: var(--bg-gray); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); }
-        .lang-switch button { background: none; border: none; cursor: pointer; color: var(--text-gray); font-weight: 600; font-family: 'Inter', sans-serif; transition: 0.3s; }
-        .lang-switch button.active { color: var(--primary-blue); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; z-index: 102; }
+        .hamburger span { width: 25px; height: 3px; background: var(--text-headers); transition: 0.3s; border-radius: 2px; }
 
-        /* Hamburger Menu (Hidden by default) */
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; }
-        .hamburger span { display: block; width: 25px; height: 3px; background-color: var(--primary-blue); border-radius: 3px; transition: transform 0.3s, opacity 0.3s; }
+        .mobile-menu {
+            position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+            background: var(--bg-base); z-index: 101;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: right 0.4s ease;
+        }
+        .mobile-menu.open { right: 0; }
+        .mobile-menu ul { list-style: none; text-align: center; display: flex; flex-direction: column; gap: 20px;}
+        .mobile-menu ul li a { font-size: 1.3rem; color: var(--text-headers); font-weight: 600;}
+        .close-menu { position: absolute; top: 20px; left: 5%; font-size: 2.5rem; color: var(--text-headers); background: none; border: none; cursor: pointer; }
 
         /* ================= HERO ================= */
-        .hero { display: flex; align-items: center; justify-content: space-between; background: var(--primary-blue); padding: 80px 10%; min-height: 45vh; color: white; gap: 40px; border-bottom: 6px solid var(--accent-red); }
-        .hero-left { flex: 1; display: flex; justify-content: center; }
-        .hero-left img { max-width: 320px; width: 100%; height: auto; }
-        .hero-right { flex: 1.5; }
-        .hero-right h1 { font-size: 2.8rem; font-weight: 700; line-height: 1.2; letter-spacing: -1px; margin-bottom: 20px; }
-        .hero-right p { font-size: 1.15rem; color: rgba(255,255,255,0.9); font-weight: 400; }
-
-        /* ================= SECTIONS & CARDS ================= */
-        section { padding: 90px 10%; border-bottom: 1px solid var(--border); }
-        .bg-gray { background-color: var(--bg-gray); }
-        
-        .section-header { margin-bottom: 50px; max-width: 800px; }
-        .section-header h2 { font-size: 2rem; font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; color: var(--primary-blue); display: flex; align-items: center; gap: 15px; flex-wrap: wrap;}
-        .section-header p { font-size: 1.1rem; color: var(--text-gray); }
-        .badge { background: var(--accent-red); color: white; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; text-transform: uppercase; white-space: nowrap; }
-
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        
-        .card { background: var(--primary-soft); padding: 40px 30px; border-radius: 12px; border: 1px solid rgba(0, 56, 101, 0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 56, 101, 0.08); background: var(--primary-hover); }
-        .card h3 { font-size: 1.25rem; color: var(--text-dark); margin-bottom: 15px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-        .card h3::before { content: ''; display: block; width: 8px; height: 8px; background: var(--accent-red); border-radius: 50%; }
-        .card p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.6; }
-
-        ul.custom-list { list-style: none; margin-top: 15px; }
-        ul.custom-list li { position: relative; padding-left: 22px; margin-bottom: 10px; color: var(--text-gray); font-size: 0.95rem; }
-        ul.custom-list li::before { content: '✓'; position: absolute; left: 0; color: var(--primary-blue); font-weight: bold; }
-
-        /* ================= TIMELINE & BUDGET ================= */
-        .deliv-budget-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; margin-top: 60px; }
-        .entregables-col { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
-        .entregables-col h3 { font-size: 1.4rem; margin-bottom: 25px; color: var(--primary-blue); }
-        
-        .budget-card { background: var(--bg-gray); border: 1px solid var(--border); border-radius: 12px; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
-        .budget-card h3 { font-size: 1.4rem; margin-bottom: 25px; font-weight: 600; text-align: center; color: var(--primary-blue); }
-        .price-breakdown { padding-top: 20px; border-top: 1px solid var(--border); width: 100%; }
-        .price-row { display: flex; justify-content: space-between; margin-bottom: 12px; color: var(--text-gray); font-size: 1rem; }
-        .price-row.total { margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--primary-blue); color: var(--text-dark); font-weight: 700; font-size: 1.6rem; align-items: center; }
-
-        .timeline-wrapper { margin-top: 60px; background: var(--bg-white); padding: 40px; border-radius: 12px; border: 1px solid var(--border); }
-        .timeline-wrapper h3 { margin-bottom: 25px; font-size: 1.4rem; color: var(--primary-blue); }
-        .timeline-flex { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px; }
-        .time-block { flex: 1; min-width: 220px; background: var(--bg-gray); border-top: 4px solid var(--primary-blue); padding: 25px 20px; border-radius: 0 0 8px 8px; }
-        .time-block.accent { border-top-color: var(--accent-red); background: rgba(227, 0, 15, 0.03); }
-        .time-block h4 { font-size: 1.05rem; margin-bottom: 8px; color: var(--text-dark); }
-        .time-block p { font-size: 0.9rem; color: var(--text-gray); }
-
-        /* ================= LEGAL ================= */
-        .info-box { background: var(--bg-white); border: 1px solid var(--border); border-left: 4px solid var(--primary-blue); padding: 30px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
-        .info-box.warning { border-left-color: var(--accent-red); }
-        .info-box h4 { font-size: 1.2rem; margin-bottom: 10px; color: var(--text-dark); }
-        .info-box p { color: var(--text-gray); font-size: 0.95rem; }
-
-        /* ================= FOOTER ================= */
-        footer { background: var(--bg-gray); padding: 40px 10%; text-align: center; border-top: 1px solid var(--border); }
-        footer p, .footer-contact { color: var(--text-gray); font-size: 0.95rem; font-weight: 400; }
-        .footer-contact { margin-top: 10px; }
-
-        /* ================= MOBILE OPTIMIZATION ================= */
-        @media (max-width: 900px) {
-            .deliv-budget-grid { grid-template-columns: 1fr; gap: 30px; }
+        .hero { 
+            background: var(--bg-white); 
+            padding: 80px 5%; 
+            min-height: 45vh; 
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        @media (max-width: 768px) {
-            /* Header adjustments for mobile */
-            header { padding: 15px 5%; }
+        .hero .wrapper { 
+            justify-content: center; 
+            gap: 150px; 
+        }
+        .hero-left { display: flex; flex: 0 1 auto; }
+        .hero-left img { max-width: 280px; width: 100%; }
+        .hero-right { display: flex; flex: 0 1 auto; text-align: left; max-width: 600px;}
+        .hero-right h1 { 
+            font-size: 2.4rem; 
+            font-weight: 700; 
+            line-height: 1.2; 
+            color: var(--text-headers); 
+            font-family: 'Poppins', sans-serif; 
+            letter-spacing: -0.5px;
+            margin-bottom: 15px;
+        }
+        .hero-right p {
+            font-size: 1.1rem;
+            color: var(--text-body);
+        }
+
+        /* ================= SECTIONS ================= */
+        section { padding: 100px 10%; }
+        .section-header { margin-bottom: 60px; max-width: 850px; }
+        .section-header h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 15px; color: var(--text-headers); font-family: 'Poppins', sans-serif; }
+
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .card { background: var(--bg-white); padding: 40px 30px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; }
+        .card h3 { font-size: 1.3rem; color: var(--accent); margin-bottom: 15px; font-weight: 600; }
+        
+        .card ul { list-style: none; margin-top: 15px; }
+        .card ul li { margin-bottom: 10px; padding-left: 15px; position: relative; font-size: 0.95rem; }
+        .card ul li::before { content: '•'; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
+
+        /* ================= TIMELINE ================= */
+        .timeline-wrapper { margin-top: 40px; background: var(--bg-white); padding: 40px; border-radius: 12px; border: 1px solid var(--border); }
+        .timeline-wrapper h3 { margin-bottom: 25px; font-size: 1.6rem; color: var(--text-headers); font-family: 'Poppins', sans-serif;}
+        
+        .timeline-flex { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; }
+        .time-block { flex: 1; min-width: 200px; background: var(--bg-gray); border-top: 4px solid var(--accent); padding: 25px 20px; border-radius: 0 0 8px 8px; }
+        .time-block.light-block { border-top-color: #627D98; background: #f8fbfd; }
+        .time-block h4 { font-size: 1.1rem; margin-bottom: 5px; color: var(--text-headers); }
+        .promo-subheader { font-size: 0.75rem; text-transform: uppercase; color: var(--accent); font-weight: 700; display: block; margin-bottom: 15px; }
+
+        /* ================= BUDGET ================= */
+        .deliv-budget-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; margin-top: 40px; }
+        .entregables-col { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 40px; }
+        .entregables-col h3 { font-size: 1.5rem; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; color: var(--text-headers); }
+        
+        ul.custom-list { list-style: none; }
+        ul.custom-list li { position: relative; padding-left: 25px; margin-bottom: 20px; font-size: 0.95rem; padding-bottom: 15px; border-bottom: 1px solid var(--bg-gray);}
+        ul.custom-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0;}
+        ul.custom-list li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: bold; font-size: 1.1rem;}
+        ul.custom-list li strong { color: var(--text-headers); display: block; margin-bottom: 5px; font-size: 1.05rem;}
+
+        .budget-card { background: var(--bg-headers); border: 2px solid var(--accent); border-radius: 12px; padding: 40px; display: flex; flex-direction: column; justify-content: center; background-color: var(--bg-white);}
+        .budget-card > h3 { font-size: 1.5rem; margin-bottom: 25px; font-weight: 700; text-align: center; color: var(--text-headers); }
+        .price-breakdown { padding-top: 20px; border-top: 1px solid var(--border); width: 100%; }
+        
+        .price-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 1rem; width: 100%; align-items: baseline; gap: 15px; color: var(--text-body);}
+        .price-row span:last-child { text-align: right; flex-shrink: 0; font-weight: 600; color: var(--text-headers);}
+        .price-row.total { margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--text-headers); color: var(--accent); font-weight: 700; font-size: 1.8rem; letter-spacing: -0.5px; }
+        
+        /* ================= INFO BOX (DISCLAIMERS) ================= */
+        .info-box { background: var(--bg-white); border: 1px solid var(--border); border-left: 4px solid var(--text-headers); padding: 30px; border-radius: 8px; }
+        .info-box ul { list-style: none; }
+        .info-box ul li { margin-bottom: 15px; font-size: 0.95rem; }
+        .info-box ul li strong { color: var(--accent); }
+
+        footer { background: var(--bg-white); padding: 40px 10%; text-align: center; border-top: 1px solid var(--border); color: var(--text-headers); display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .footer-contact { font-size: 0.95rem; font-weight: 600; color: var(--accent); }
+
+        /* ================= MOBILE ================= */
+        @media (max-width: 900px) {
+            .desktop-nav { display: none; }
             .hamburger { display: flex; }
-            
-            /* Hidden menu state */
-            .header-right { 
-                position: absolute; top: 100%; left: 0; width: 100%; 
-                background: var(--bg-white); flex-direction: column; 
-                padding: 0 5%; 
-                box-shadow: 0 10px 15px rgba(0,0,0,0.05);
-                max-height: 0; overflow: hidden; opacity: 0;
-                align-items: center; border-top: 1px solid transparent;
-            }
-            
-            /* Active menu state */
-            .header-right.active { 
-                max-height: 500px; padding: 25px 5%; opacity: 1; 
-                border-top-color: var(--border); 
-            }
-            
-            nav ul { flex-direction: column; align-items: center; gap: 15px; width: 100%; }
-            nav ul li { width: 100%; text-align: center; }
-            nav ul li a { display: block; padding: 10px 0; font-size: 1.1rem; border-bottom: 1px solid var(--bg-gray); }
-            .lang-switch { margin-top: 15px; }
-
-            /* Hamburger animation */
-            .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .hamburger.active span:nth-child(2) { opacity: 0; }
-            .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-            /* General Mobile Layout */
-            .hero { flex-direction: column; text-align: center; padding: 50px 5%; gap: 25px;}
-            .hero-right h1 { font-size: 2.2rem; }
+            .hero { padding: 60px 5%; }
+            .hero .wrapper { flex-direction: column-reverse; text-align: center; gap: 40px; }
+            .hero-right h1 { font-size: 1.8rem; text-align: center;}
+            .hero-right p { text-align: center; }
             section { padding: 60px 5%; }
-            .section-header h2 { font-size: 1.7rem; align-items: flex-start; flex-direction: column; gap: 8px;}
-            .timeline-flex { flex-direction: column; gap: 15px;}
-            .time-block { border-top: none; border-left: 4px solid var(--primary-blue); border-radius: 0 8px 8px 0; padding: 20px; }
-            .time-block.accent { border-left-color: var(--accent-red); }
-            .budget-card, .entregables-col { padding: 25px; }
+            .deliv-budget-grid { grid-template-columns: 1fr; }
+            .timeline-flex { flex-direction: column; }
+            .time-block { border-top: none; border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; }
         }
     </style>
 </head>
 <body>
-
     <header>
-        <div class="header-left">
-            <a href="#" class="logo-text">Loop Development</a>
-        </div>
-        
-        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <div class="header-right" id="mobile-menu">
-            <nav>
-                <ul>
-                    <li><a href="#d1" onclick="toggleMenu()"><span class="lang es">Consolidación Páginas</span><span class="lang en hidden">Pages Consolidation</span></a></li>
-                    <li><a href="#d2" onclick="toggleMenu()"><span class="lang es">Documentación</span><span class="lang en hidden">Documentation</span></a></li>
-                    <li><a href="#d3" onclick="toggleMenu()"><span class="lang es">SEO On-Site</span><span class="lang en hidden">SEO On-Site</span></a></li>
-                    <li><a href="#d4" onclick="toggleMenu()"><span class="lang es">Rendimiento</span><span class="lang en hidden">Performance</span></a></li>
-                    <li><a href="#d5" onclick="toggleMenu()"><span class="lang es">Front-End</span><span class="lang en hidden">Front-End</span></a></li>
-                </ul>
-            </nav>
-            <div class="lang-switch">
-                <button onclick="setLang('es')" id="btn-es" class="active">ESP</button>
-                <button onclick="setLang('en')" id="btn-en">ENG</button>
+        <div class="wrapper">
+            <div class="logo">
+                <a href="#" class="logo-text">
+                    <img src="loop-logo.png" alt="Loop Development" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x50/005A9C/FFFFFF?text=Loop+Development';">
+                </a>
             </div>
+            
+            <div class="desktop-nav">
+                <nav>
+                    <ul>
+                        <li><a href="#overview">Resumen</a></li>
+                        <li><a href="#architecture">Arquitectura</a></li>
+                        <li><a href="#roadmap">Cronograma</a></li>
+                        <li><a href="#budget">Alcance y Presupuesto</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <button class="hamburger" id="hamburger-btn">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <div class="hero">
-        <div class="hero-left">
-            <img src="LogoCT.png" alt="Control Técnica">
+    <div class="mobile-menu" id="mobile-menu">
+        <button class="close-menu" id="close-menu-btn">&times;</button>
+        <div class="logo" style="margin-bottom: 40px;">
+            <a href="#" class="logo-text" style="color: var(--accent); font-weight: 700; font-size: 1.5rem;">Loop Development</a>
         </div>
-        <div class="hero-right">
-            <h1>
-                <span class="lang es">Optimización y Estabilización WordPress</span>
-                <span class="lang en hidden">WordPress Optimization & Stabilization</span>
-            </h1>
-            <p>
-                <span class="lang es">Estrategia iterativa centrada en SEO, Performance y Experiencia de Usuario, priorizando el impacto directo en negocio sin comprometer la estabilidad del site actual.</span>
-                <span class="lang en hidden">Iterative strategy focused on SEO, Performance, and UX, prioritizing direct business impact without compromising current site stability.</span>
-            </p>
+        <nav>
+            <ul>
+                <li><a href="#overview" class="mobile-link">Resumen</a></li>
+                <li><a href="#architecture" class="mobile-link">Arquitectura</a></li>
+                <li><a href="#roadmap" class="mobile-link">Cronograma</a></li>
+                <li><a href="#budget" class="mobile-link">Alcance y Presupuesto</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="hero fade-in-up">
+        <div class="wrapper">
+            <div class="hero-left">
+                <img src="ct-logo.png" alt="Controltecnica" onerror="this.onerror=null; this.src='https://via.placeholder.com/280x80/102A43/FFFFFF?text=Controltecnica';">
+            </div>
+            <div class="hero-right">
+                <div>
+                    <h1>Propuesta de Reconstrucción:<br>Plataforma División BIO</h1>
+                    <p>Una migración completa a una arquitectura independiente de alto rendimiento. Diseñada para velocidad, escalabilidad de catálogo y generación avanzada de leads.</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <section id="enfoque">
+    <section id="overview" class="fade-in-up">
         <div class="section-header">
-            <h2><span class="lang es">Enfoque de Trabajo</span><span class="lang en hidden">Work Approach</span></h2>
-            <p>
-                <span class="lang es">Nuestra metodología se basa en bloques independientes (deliverables). Cada fase se ejecuta, valida y cierra de forma individual para asegurar calidad y control de riesgos.</span>
-                <span class="lang en hidden">Our methodology is based on independent blocks (deliverables). Each phase is executed, validated, and closed individually to ensure quality and risk control.</span>
-            </p>
+            <h2>Estrategia del Proyecto</h2>
+            <p>En lugar de parchear un tema lento y obsoleto, este proyecto ejecuta una "Reconstrucción Limpia". Utilizaremos un Entorno de Staging privado en su servidor Plesk para construir una web rápida y moderna sin afectar su tráfico en vivo.</p>
         </div>
+
         <div class="grid-container">
-            <div class="card">
-                <h3><span class="lang es">Auditoría & Priorización</span><span class="lang en hidden">Audit & Prioritization</span></h3>
-                <p><span class="lang es">Análisis inicial técnico y funcional. Priorización de tareas según la matriz de impacto vs. esfuerzo.</span><span class="lang en hidden">Initial technical and functional analysis. Task prioritization based on the impact vs. effort matrix.</span></p>
+            <div class="card hover-3d">
+                <h3>Arquitectura Dinámica</h3>
+                <p>Reemplazamos los constructores pesados con Elementor Pro. Estableceremos Custom Post Types y 'Brand Showcases' automatizados para gestionar limpiamente los 130 productos técnicos.</p>
             </div>
-            <div class="card">
-                <h3><span class="lang es">Ejecución en Staging</span><span class="lang en hidden">Staging Execution</span></h3>
-                <p><span class="lang es">Desarrollo iterativo en un entorno de pruebas seguro para asegurar la premisa de "mejorar sin romper".</span><span class="lang en hidden">Iterative development in a secure staging environment to ensure the "improve without breaking" premise.</span></p>
-            </div>
-            <div class="card">
-                <h3><span class="lang es">Validación Continua</span><span class="lang en hidden">Continuous Validation</span></h3>
-                <p><span class="lang es">Comunicación constante con el cliente para la validación de cada entregable antes de su paso a producción.</span><span class="lang en hidden">Constant communication with the client to validate each deliverable before going live.</span></p>
+            <div class="card hover-3d">
+                <h3>Captación Interactiva</h3>
+                <p>Implementación de un 'Quiz Recomendador de IA' de varios pasos para guiar a los usuarios al equipo perfecto, enviando leads cualificados directamente al equipo de triaje del laboratorio.</p>
             </div>
         </div>
     </section>
 
-    <section id="d1" class="bg-gray">
+    <section id="architecture" style="background: var(--bg-gray);" class="fade-in-up">
         <div class="section-header">
-            <h2>
-                <span class="badge">Deliverable 1</span> 
-                <span class="lang es">Consolidación de Páginas de Producto</span>
-                <span class="lang en hidden">Product Pages Consolidation</span>
-            </h2>
-            <p><span class="lang es">Unificación y limpieza profunda del sistema de productos actuales en la web.</span><span class="lang en hidden">Unification and deep cleanup of the current product system on the website.</span></p>
+            <h2>Arquitectura Web</h2>
+            <p>Estructura detallada de las páginas, plantillas dinámicas y elementos de conversión que compondrán la nueva plataforma.</p>
         </div>
 
         <div class="grid-container">
-            <div class="card">
-                <h3><span class="lang es">Alcance Técnico</span><span class="lang en hidden">Technical Scope</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Consolidación en un único template de producto.</span><span class="lang en hidden">Consolidation into a single product template.</span></li>
-                    <li><span class="lang es">Eliminación de inconsistencias entre páginas.</span><span class="lang en hidden">Elimination of inconsistencies between pages.</span></li>
-                    <li><span class="lang es">Limpieza del catálogo (duplicados y lógica).</span><span class="lang en hidden">Catalog cleanup (duplicates and logic).</span></li>
+            <div class="card hover-3d">
+                <h3>1. Home Page</h3>
+                <p>Sección Hero principal, vista previa del catálogo y productos destacados, breve sección de "Sobre nosotros", Preguntas Frecuentes (FAQs) y Footer.</p>
+            </div>
+            
+            <div class="card hover-3d">
+                <h3>2. Sobre Nosotros</h3>
+                <p>Página con un diseño limpio y minimalista, alternando secciones de texto, imágenes/vídeos y la presentación del equipo o de cómo trabajamos.</p>
+            </div>
+
+            <div class="card hover-3d">
+                <h3>3. Página de Catálogo</h3>
+                <p>Estará dividida en 9 familias (3 por línea de trabajo y 6 por grupos de productos). Se desarrollarán dos casuísticas dinámicas:</p>
+                <ul>
+                    <li><strong>Productos unitarios:</strong> 1 plantilla de tarjeta (vista previa) y 1 plantilla de página final (toda la info, imágenes y tabla de especificaciones).</li>
+                    <li><strong>Productos agrupados:</strong> 1 plantilla de tarjeta (vista previa) y 1 plantilla de página de producto (info, imágenes y tabla comparativa).</li>
                 </ul>
             </div>
-            <div class="card">
-                <h3><span class="lang es">Impacto en Negocio</span><span class="lang en hidden">Business Impact</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Escalabilidad futura garantizada.</span><span class="lang en hidden">Guaranteed future scalability.</span></li>
-                    <li><span class="lang es">Reducción drástica de errores.</span><span class="lang en hidden">Drastic reduction in errors.</span></li>
-                    <li><span class="lang es">Mejora SEO estructural de la tienda.</span><span class="lang en hidden">Structural SEO improvement for the store.</span></li>
+
+            <div class="card hover-3d">
+                <h3>4. Contacto</h3>
+                <p>Página de contacto corporativa con información de ubicación, múltiples vías de comunicación y formulario de consultas directo.</p>
+            </div>
+
+            <div class="card hover-3d">
+                <h3>5. Elementos de Conversión</h3>
+                <ul>
+                    <li>CTAs (Llamadas a la acción) claros al final de cada página y en el footer.</li>
+                    <li>Formularios de contacto (simples y complejos según la página).</li>
+                    <li>Botón flotante de acceso rápido a WhatsApp.</li>
                 </ul>
             </div>
+
+            <div class="card hover-3d">
+                <h3>6. Quiz Interactivo (Recomendador)</h3>
+                <p><em>"¿No sabes por dónde empezar? Haz este test y encuentra tu producto ideal"</em>.</p>
+                <p>Un chatbot/quiz de IA con respuestas cerradas (multiple choice) que recomendará productos específicos y derivará a un contacto directo.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="roadmap" style="background: var(--bg-white);" class="fade-in-up">
+        <div class="section-header">
+            <h2>Cronograma de Ejecución (8 Semanas)</h2>
+            <p>Un cronograma estructurado que garantiza cero tiempo de inactividad, formato de datos adecuado y un riguroso control de calidad antes del lanzamiento final.</p>
         </div>
 
         <div class="timeline-wrapper">
-            <h3><span class="lang es">Cronograma Estimado</span><span class="lang en hidden">Estimated Timeline</span></h3>
             <div class="timeline-flex">
                 <div class="time-block">
-                    <h4><span class="lang es">Fase 1: Implementación</span><span class="lang en hidden">Phase 1: Implementation</span></h4>
-                    <p><span class="lang es">Desarrollo y unificación en entorno Staging.</span><span class="lang en hidden">Development and unification in Staging environment.</span></p>
+                    <h4>Semana 1</h4>
+                    <span class="promo-subheader">Fundación y UI</span>
+                    <p>Setup de staging en Plesk, limpieza de código heredado y diseño de elementos globales (Home, Contacto, Cabeceras).</p>
+                </div>
+                <div class="time-block light-block">
+                    <h4>Semana 2 y 3</h4>
+                    <span class="promo-subheader">La Arquitectura</span>
+                    <p>Construcción de los moldes de datos. Diseño de las plantillas dinámicas de productos Unitarios y Agrupados para aprobación.</p>
                 </div>
                 <div class="time-block">
-                    <h4><span class="lang es">Fase 2: Revisión</span><span class="lang en hidden">Phase 2: Review</span></h4>
-                    <p><span class="lang es">QA interno y ajustes técnicos.</span><span class="lang en hidden">Internal QA and technical adjustments.</span></p>
+                    <h4>Semanas 4, 5 y 6</h4>
+                    <span class="promo-subheader">Ingreso de Datos y Lógica</span>
+                    <p>Formato manual de 130 fichas de productos y configuración completa del Quiz de Captación de Leads.</p>
                 </div>
-                <div class="time-block accent">
-                    <h4><span class="lang es">Fase 3: Validación</span><span class="lang en hidden">Phase 3: Validation</span></h4>
-                    <p><span class="lang es">Revisión con cliente y despliegue a Live.</span><span class="lang en hidden">Client review and deployment to Live.</span></p>
+                <div class="time-block light-block">
+                    <h4>Semanas 7 y 8</h4>
+                    <span class="promo-subheader">SEO y Lanzamiento</span>
+                    <p>Optimización de caché, pruebas en dispositivos, revisión final del cliente y migración a Live en 1 clic sin caídas.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section id="budget" class="fade-in-up">
+        <div class="section-header">
+            <h2>Alcance de Trabajo y Presupuesto</h2>
         </div>
 
         <div class="deliv-budget-grid">
             <div class="entregables-col">
-                <h3><span class="lang es">Entregables Finales</span><span class="lang en hidden">Final Deliverables</span></h3>
+                <h3>Fases del Proyecto</h3>
                 <ul class="custom-list">
-                    <li><span class="lang es">Template unificado funcional en WordPress.</span><span class="lang en hidden">Unified functional template in WordPress.</span></li>
-                    <li><span class="lang es">Catálogo depurado sin inconsistencias.</span><span class="lang en hidden">Cleaned catalog without inconsistencies.</span></li>
+                    <li>
+                        <strong>1. Setup de Servidor y Limpieza</strong>
+                        Auditoría Plesk, configuración de entorno staging seguro, instalación del constructor visual, limpieza de wpBakery/sliders antiguos.
+                    </li>
+                    <li>
+                        <strong>2. Diseño UI/UX y Páginas Core</strong>
+                        Diseño de Home, Sobre Nosotros, Contacto, Cabeceras/Footers y WhatsApp flotante. <em>(Incluye: 2 Rondas de Revisiones)</em>
+                    </li>
+                    <li>
+                        <strong>3. Arquitectura de Catálogo y Plantillas</strong>
+                        Setup de Custom Post Types para 9 familias, diseño de 2 plantillas dinámicas (Unitarias y Agrupadas). <em>(Incluye: 2 Rondas de Revisiones)</em>
+                    </li>
+                    <li>
+                        <strong>4. Carga de Datos (130 Productos)</strong>
+                        Creación manual, formato de tablas de especificaciones y compresión de imágenes para 63 fichas de productos.
+                    </li>
+                    <li>
+                        <strong>5. Quiz Interactivo Recomendador</strong>
+                        Mapeo de lógica, construcción de flujo interactivo, enlace de resultados a productos y correo de triaje.
+                    </li>
+                    <li>
+                        <strong>6. SEO Técnico y Velocidad</strong>
+                        Implementación de SEO on-page, schema markup y caché para resolver la puntuación actual de 24/100 en Lighthouse.
+                    </li>
+                    <li>
+                        <strong>7. QA, Pruebas y Migración a Live</strong>
+                        Pruebas en dispositivos, verificación de formularios y push a Live sin tiempo de inactividad. <em>(Incluye: 1 Ronda de Pulido Final)</em>
+                    </li>
                 </ul>
             </div>
+
             <div class="budget-card">
-                <h3><span class="lang es">Presupuesto D1</span><span class="lang en hidden">D1 Budget</span></h3>
+                <h3>Inversión del Proyecto</h3>
                 <div class="price-breakdown">
-                    <div class="price-row"><span><span class="lang es">Base Imponible</span><span class="lang en hidden">Subtotal</span></span><span>X€</span></div>
-                    <div class="price-row"><span><span class="lang es">IVA (21%)</span><span class="lang en hidden">VAT (21%)</span></span><span>X€</span></div>
-                    <div class="price-row total"><span>Total</span><span>X€</span></div>
+                    <div class="price-row">
+                        <span>Fase 1</span>
+                        <span>150,00€</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Fase 2</span>
+                        <span>450,00€</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Fase 3</span>
+                        <span>400,00€</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Fase 4</span>
+                        <span>700,00€</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Fase 5</span>
+                        <span>400,00€</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Fase 6</span>
+                        <span>250,00€</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Fase 7</span>
+                        <span>150,00€</span>
+                    </div>
+                    
+                    <div class="price-row total">
+                        <span>Subtotal</span>
+                        <span>2.500,00€</span>
+                    </div>
+                    <div class="price-row" style="margin-top: 10px; font-size: 0.9rem; color: var(--text-body);">
+                        <span>+ IVA (21%)</span>
+                        <span>525,00€</span>
+                    </div>
+                    <div class="price-row" style="font-weight: 700; font-size: 1.2rem; color: var(--text-headers);">
+                        <span>Total</span>
+                        <span>3.025,00€</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="d2">
+    <section id="disclaimers" class="fade-in-up" style="background: var(--bg-white); padding-top: 60px; padding-bottom: 60px;">
         <div class="section-header">
-            <h2>
-                <span class="badge">Deliverable 2</span> 
-                <span class="lang es">Documentación Interna</span>
-                <span class="lang en hidden">Internal Documentation</span>
-            </h2>
-            <p><span class="lang es">Creación de documentación clara para la gestión y autonomía del equipo interno.</span><span class="lang en hidden">Creation of clear documentation for the management and autonomy of the internal team.</span></p>
+            <h2>Términos y Condiciones</h2>
         </div>
-
-        <div class="grid-container">
-            <div class="card">
-                <h3><span class="lang es">Alcance Técnico</span><span class="lang en hidden">Technical Scope</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Guía de creación y edición de productos.</span><span class="lang en hidden">Product creation and editing guide.</span></li>
-                    <li><span class="lang es">Buenas prácticas de contenido y SEO básico.</span><span class="lang en hidden">Content best practices and basic SEO.</span></li>
-                    <li><span class="lang es">Estructura recomendada y flujo de updates.</span><span class="lang en hidden">Recommended structure and update flow.</span></li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3><span class="lang es">Impacto en Negocio</span><span class="lang en hidden">Business Impact</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Autonomía total del equipo interno.</span><span class="lang en hidden">Total autonomy for the internal team.</span></li>
-                    <li><span class="lang es">Menos dependencia técnica de agencia.</span><span class="lang en hidden">Less technical dependency on the agency.</span></li>
-                    <li><span class="lang es">Consistencia visual a lo largo del tiempo.</span><span class="lang en hidden">Visual consistency over time.</span></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="timeline-wrapper">
-            <h3><span class="lang es">Cronograma Estimado</span><span class="lang en hidden">Estimated Timeline</span></h3>
-            <div class="timeline-flex">
-                <div class="time-block">
-                    <h4><span class="lang es">Fase 1: Redacción</span><span class="lang en hidden">Phase 1: Drafting</span></h4>
-                    <p><span class="lang es">Creación de manuales basados en el nuevo template.</span><span class="lang en hidden">Creation of manuals based on the new template.</span></p>
-                </div>
-                <div class="time-block">
-                    <h4><span class="lang es">Fase 2: Revisión</span><span class="lang en hidden">Phase 2: Review</span></h4>
-                    <p><span class="lang es">Ajustes según flujos de trabajo del cliente.</span><span class="lang en hidden">Adjustments based on client workflows.</span></p>
-                </div>
-                <div class="time-block accent">
-                    <h4><span class="lang es">Fase 3: Entrega</span><span class="lang en hidden">Phase 3: Delivery</span></h4>
-                    <p><span class="lang es">Entrega de assets y resolución de dudas.</span><span class="lang en hidden">Asset delivery and Q&A.</span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="deliv-budget-grid">
-            <div class="entregables-col">
-                <h3><span class="lang es">Entregables Finales</span><span class="lang en hidden">Final Deliverables</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Manual corporativo en formato PDF / Notion.</span><span class="lang en hidden">Corporate manual in PDF / Notion format.</span></li>
-                </ul>
-            </div>
-            <div class="budget-card">
-                <h3><span class="lang es">Presupuesto D2</span><span class="lang en hidden">D2 Budget</span></h3>
-                <div class="price-breakdown">
-                    <div class="price-row"><span><span class="lang es">Base Imponible</span><span class="lang en hidden">Subtotal</span></span><span>X€</span></div>
-                    <div class="price-row"><span><span class="lang es">IVA (21%)</span><span class="lang en hidden">VAT (21%)</span></span><span>X€</span></div>
-                    <div class="price-row total"><span>Total</span><span>X€</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="d3" class="bg-gray">
-        <div class="section-header">
-            <h2>
-                <span class="badge">Deliverable 3</span> 
-                <span class="lang es">SEO On-Site</span>
-                <span class="lang en hidden">SEO On-Site</span>
-            </h2>
-            <p><span class="lang es">Optimización técnica profunda para mejorar el posicionamiento orgánico en Google.</span><span class="lang en hidden">Deep technical optimization to improve organic ranking on Google.</span></p>
-        </div>
-
-        <div class="grid-container">
-            <div class="card">
-                <h3><span class="lang es">Alcance Técnico</span><span class="lang en hidden">Technical Scope</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Sitemap optimizado y revisión de indexación.</span><span class="lang en hidden">Optimized sitemap and indexing review.</span></li>
-                    <li><span class="lang es">Mejora de URLs e implementación de Schema.</span><span class="lang en hidden">URL improvement and Schema implementation.</span></li>
-                    <li><span class="lang es">Optimización de Meta Titles, Descriptions y Alt text.</span><span class="lang en hidden">Meta Titles, Descriptions, and Alt text optimization.</span></li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3><span class="lang es">Impacto en Negocio</span><span class="lang en hidden">Business Impact</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Mejor rastreo e indexación por buscadores.</span><span class="lang en hidden">Better crawling and indexing by search engines.</span></li>
-                    <li><span class="lang es">Aumento constante del tráfico orgánico.</span><span class="lang en hidden">Steady increase in organic traffic.</span></li>
-                    <li><span class="lang es">Mejora de rankings en palabras clave.</span><span class="lang en hidden">Keyword ranking improvements.</span></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="timeline-wrapper">
-            <h3><span class="lang es">Cronograma Estimado</span><span class="lang en hidden">Estimated Timeline</span></h3>
-            <div class="timeline-flex">
-                <div class="time-block">
-                    <h4><span class="lang es">Fase 1: Auditoría SEO</span><span class="lang en hidden">Phase 1: SEO Audit</span></h4>
-                    <p><span class="lang es">Extracción de errores de Search Console.</span><span class="lang en hidden">Extraction of errors from Search Console.</span></p>
-                </div>
-                <div class="time-block">
-                    <h4><span class="lang es">Fase 2: Implementación</span><span class="lang en hidden">Phase 2: Implementation</span></h4>
-                    <p><span class="lang es">Corrección masiva On-Site.</span><span class="lang en hidden">Massive On-Site correction.</span></p>
-                </div>
-                <div class="time-block accent">
-                    <h4><span class="lang es">Fase 3: Validación</span><span class="lang en hidden">Phase 3: Validation</span></h4>
-                    <p><span class="lang es">Re-indexación y comprobación.</span><span class="lang en hidden">Re-indexing and verification.</span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="deliv-budget-grid">
-            <div class="entregables-col">
-                <h3><span class="lang es">Entregables Finales</span><span class="lang en hidden">Final Deliverables</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Web 100% optimizada a nivel técnico SEO.</span><span class="lang en hidden">Website 100% optimized at a technical SEO level.</span></li>
-                    <li><span class="lang es">Reporte de métricas iniciales vs. finales.</span><span class="lang en hidden">Report of initial vs. final metrics.</span></li>
-                </ul>
-            </div>
-            <div class="budget-card">
-                <h3><span class="lang es">Presupuesto D3</span><span class="lang en hidden">D3 Budget</span></h3>
-                <div class="price-breakdown">
-                    <div class="price-row"><span><span class="lang es">Base Imponible</span><span class="lang en hidden">Subtotal</span></span><span>X€</span></div>
-                    <div class="price-row"><span><span class="lang es">IVA (21%)</span><span class="lang en hidden">VAT (21%)</span></span><span>X€</span></div>
-                    <div class="price-row total"><span>Total</span><span>X€</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="d4">
-        <div class="section-header">
-            <h2>
-                <span class="badge">Deliverable 4</span> 
-                <span class="lang es">Optimización de Rendimiento</span>
-                <span class="lang en hidden">Performance Optimization</span>
-            </h2>
-            <p><span class="lang es">Mejora de la velocidad de carga basada en las métricas core de Lighthouse.</span><span class="lang en hidden">Load speed improvement based on Lighthouse core metrics.</span></p>
-        </div>
-
-        <div class="grid-container">
-            <div class="card">
-                <h3><span class="lang es">Alcance Técnico</span><span class="lang en hidden">Technical Scope</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Optimización y compresión de imágenes.</span><span class="lang en hidden">Image optimization and compression.</span></li>
-                    <li><span class="lang es">Limpieza de plugins innecesarios.</span><span class="lang en hidden">Cleanup of unnecessary plugins.</span></li>
-                    <li><span class="lang es">Eliminación de páginas duplicadas y ajuste de Caché.</span><span class="lang en hidden">Elimination of duplicate pages and Cache tuning.</span></li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3><span class="lang es">Impacto en Negocio</span><span class="lang en hidden">Business Impact</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Mejor experiencia de usuario (UX fluida).</span><span class="lang en hidden">Better user experience (smooth UX).</span></li>
-                    <li><span class="lang es">Mejora indirecta SEO (Core Web Vitals).</span><span class="lang en hidden">Indirect SEO improvement (Core Web Vitals).</span></li>
-                    <li><span class="lang es">Reducción del porcentaje de rebote.</span><span class="lang en hidden">Reduction in bounce rate.</span></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="timeline-wrapper">
-            <h3><span class="lang es">Cronograma Estimado</span><span class="lang en hidden">Estimated Timeline</span></h3>
-            <div class="timeline-flex">
-                <div class="time-block">
-                    <h4><span class="lang es">Fase 1: Diagnóstico</span><span class="lang en hidden">Phase 1: Diagnostics</span></h4>
-                    <p><span class="lang es">Análisis profundo de cuellos de botella.</span><span class="lang en hidden">Deep analysis of bottlenecks.</span></p>
-                </div>
-                <div class="time-block">
-                    <h4><span class="lang es">Fase 2: Implementación</span><span class="lang en hidden">Phase 2: Implementation</span></h4>
-                    <p><span class="lang es">Ajustes a nivel servidor y CMS.</span><span class="lang en hidden">Adjustments at server and CMS level.</span></p>
-                </div>
-                <div class="time-block accent">
-                    <h4><span class="lang es">Fase 3: Validación</span><span class="lang en hidden">Phase 3: Validation</span></h4>
-                    <p><span class="lang es">Testeo de rendimiento final.</span><span class="lang en hidden">Final performance testing.</span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="deliv-budget-grid">
-            <div class="entregables-col">
-                <h3><span class="lang es">Entregables Finales</span><span class="lang en hidden">Final Deliverables</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Web rápida y optimizada para navegadores móviles/desktop.</span><span class="lang en hidden">Fast and optimized web for mobile/desktop browsers.</span></li>
-                    <li><span class="lang es">Reporte Lighthouse (Antes vs. Después).</span><span class="lang en hidden">Lighthouse Report (Before vs. After).</span></li>
-                </ul>
-            </div>
-            <div class="budget-card">
-                <h3><span class="lang es">Presupuesto D4</span><span class="lang en hidden">D4 Budget</span></h3>
-                <div class="price-breakdown">
-                    <div class="price-row"><span><span class="lang es">Base Imponible</span><span class="lang en hidden">Subtotal</span></span><span>X€</span></div>
-                    <div class="price-row"><span><span class="lang es">IVA (21%)</span><span class="lang en hidden">VAT (21%)</span></span><span>X€</span></div>
-                    <div class="price-row total"><span>Total</span><span>X€</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="d5" class="bg-gray">
-        <div class="section-header">
-            <h2>
-                <span class="badge">Deliverable 5</span> 
-                <span class="lang es">Correcciones Urgentes de Front-End</span>
-                <span class="lang en hidden">Urgent Front-End Fixes</span>
-            </h2>
-            <p><span class="lang es">Corrección de problemas críticos de interfaz (UX/UI) de alto impacto.</span><span class="lang en hidden">Correction of critical high-impact interface (UX/UI) issues.</span></p>
-        </div>
-
-        <div class="grid-container">
-            <div class="card">
-                <h3><span class="lang es">Alcance Técnico</span><span class="lang en hidden">Technical Scope</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Reparación de broken links (404).</span><span class="lang en hidden">Repair of broken links (404).</span></li>
-                    <li><span class="lang es">Corrección del botón Home / Portugal.</span><span class="lang en hidden">Correction of the Home / Portugal button.</span></li>
-                    <li><span class="lang es">Mejora del flujo en formularios de contacto.</span><span class="lang en hidden">Flow improvement in contact forms.</span></li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3><span class="lang es">Impacto en Negocio</span><span class="lang en hidden">Business Impact</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Mejora inmediata en la tasa de conversión.</span><span class="lang en hidden">Immediate improvement in conversion rate.</span></li>
-                    <li><span class="lang es">Reducción total de fricciones del usuario.</span><span class="lang en hidden">Total reduction of user frictions.</span></li>
-                    <li><span class="lang es">Estabilidad general percibida de la marca.</span><span class="lang en hidden">Perceived general brand stability.</span></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="timeline-wrapper">
-            <h3><span class="lang es">Cronograma Estimado</span><span class="lang en hidden">Estimated Timeline</span></h3>
-            <div class="timeline-flex">
-                <div class="time-block">
-                    <h4><span class="lang es">Fase 1: Identificación</span><span class="lang en hidden">Phase 1: Identification</span></h4>
-                    <p><span class="lang es">Mapeo de errores front-end urgentes.</span><span class="lang en hidden">Mapping of urgent front-end errors.</span></p>
-                </div>
-                <div class="time-block">
-                    <h4><span class="lang es">Fase 2: Implementación</span><span class="lang en hidden">Phase 2: Implementation</span></h4>
-                    <p><span class="lang es">Fixes rápidos y precisos en Staging.</span><span class="lang en hidden">Quick and precise fixes in Staging.</span></p>
-                </div>
-                <div class="time-block accent">
-                    <h4><span class="lang es">Fase 3: Validación</span><span class="lang en hidden">Phase 3: Validation</span></h4>
-                    <p><span class="lang es">Pase a producción tras el OK del cliente.</span><span class="lang en hidden">Move to production after client OK.</span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="deliv-budget-grid">
-            <div class="entregables-col">
-                <h3><span class="lang es">Entregables Finales</span><span class="lang en hidden">Final Deliverables</span></h3>
-                <ul class="custom-list">
-                    <li><span class="lang es">Navegación web sin puntos ciegos ni errores visuales.</span><span class="lang en hidden">Web navigation without blind spots or visual errors.</span></li>
-                    <li><span class="lang es">Formularios y CTAs validados y operativos al 100%.</span><span class="lang en hidden">Forms and CTAs validated and 100% operational.</span></li>
-                </ul>
-            </div>
-            <div class="budget-card">
-                <h3><span class="lang es">Presupuesto D5</span><span class="lang en hidden">D5 Budget</span></h3>
-                <div class="price-breakdown">
-                    <div class="price-row"><span><span class="lang es">Base Imponible</span><span class="lang en hidden">Subtotal</span></span><span>X€</span></div>
-                    <div class="price-row"><span><span class="lang es">IVA (21%)</span><span class="lang en hidden">VAT (21%)</span></span><span>X€</span></div>
-                    <div class="price-row total"><span>Total</span><span>X€</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="disclaimers">
-        <div class="section-header">
-            <h2><span class="lang es">Avisos & Disclaimers</span><span class="lang en hidden">Notices & Disclaimers</span></h2>
-            <p><span class="lang es">Consideraciones técnicas y legales aplicables a la propuesta.</span><span class="lang en hidden">Technical and legal considerations applicable to the proposal.</span></p>
-        </div>
-
-        <div class="info-box warning">
-            <h4><span class="lang es">Deuda Técnica en Proyectos Existentes</span><span class="lang en hidden">Technical Debt in Existing Projects</span></h4>
-            <p><span class="lang es">Al trabajar sobre un WordPress pre-existente, puede existir deuda técnica no visible (código legacy, conflictos de plugins no documentados). Nos comprometemos a mitigar cualquier riesgo utilizando entornos de prueba y backups periódicos.</span><span class="lang en hidden">When working on a pre-existing WordPress, there may be hidden technical debt (legacy code, undocumented plugin conflicts). We commit to mitigating any risk using test environments and regular backups.</span></p>
-        </div>
-        
         <div class="info-box">
-            <h4><span class="lang es">Alcance del SEO On-Site</span><span class="lang en hidden">On-Site SEO Scope</span></h4>
-            <p><span class="lang es">Esta propuesta incluye la optimización técnica SEO On-Site para garantizar la correcta indexación y estructuración de la web. Sin embargo, <strong>no incluye un Estudio SEO</strong> (Keyword Research) ni análisis avanzado de mercado o competencia.</span><span class="lang en hidden">This proposal includes technical On-Site SEO optimization to ensure proper indexing and structuring of the website. However, it <strong>does not include an SEO Study</strong> (Keyword Research) or advanced market/competitor analysis.</span></p>
-        </div>
-
-        <div class="info-box">
-            <h4><span class="lang es">Costes de Terceros y Plataformas</span><span class="lang en hidden">Third-Party and Platform Costs</span></h4>
-            <p><span class="lang es">Esta propuesta incluye exclusivamente nuestros honorarios de servicio técnico. No asume costes externos como renovaciones de hosting, dominios, licencias premium de plugins o herramientas de pago de terceros.</span><span class="lang en hidden">This proposal includes exclusively our technical service fees. It does not assume external costs such as hosting renewals, domains, premium plugin licenses, or third-party paid tools.</span></p>
-        </div>
-
-        <div class="info-box">
-            <h4><span class="lang es">Aviso Legal, RGPD y Contratos</span><span class="lang en hidden">Legal Notice, GDPR, and Contracts</span></h4>
-            <p><span class="lang es">Implementaciones vinculadas a analítica o formularios pueden requerir actualización de sus Políticas de Privacidad. Una vez aceptada esta propuesta, se redactará un contrato formal con los hitos de entrega y calendario de pagos definitivo.</span><span class="lang en hidden">Implementations linked to analytics or forms may require updating your Privacy Policies. Once this proposal is accepted, a formal contract will be drafted with the final delivery milestones and payment schedule.</span></p>
+            <ul>
+                <li>
+                    <strong>Costes de Software (Elementor Pro):</strong> 
+                    La licencia de Elementor Pro necesaria para la arquitectura web (aprox. 59€/año) es un coste externo que recae sobre el cliente y no está incluido en este presupuesto.
+                </li>
+                <li>
+                    <strong>Revisiones y Aprobaciones:</strong> 
+                    Para mantener el proyecto en plazo, se incluyen dos (2) rondas consolidadas de revisiones para los hitos visuales. Rondas adicionales o cambios en elementos ya aprobados se facturarán a la tarifa estándar de la agencia.
+                </li>
+                <li>
+                    <strong>Provisión de Datos de Producto:</strong> 
+                    El cliente es responsable de proporcionar todas las especificaciones y PDFs faltantes en una carpeta centralizada antes de iniciar la Fase 4. La búsqueda manual de PDFs por parte de la agencia no está incluida en este presupuesto.
+                </li>
+                <li>
+                    <strong>Hosting y Dominios:</strong> 
+                    Cualquier coste de terceros (servidores, renovación de dominios) no está incluido y es responsabilidad del cliente.
+                </li>
+            </ul>
         </div>
     </section>
 
     <footer>
-        <p>
-            <span class="lang es">Propuesta preparada en exclusiva para Control Técnica.</span>
-            <span class="lang en hidden">Proposal prepared exclusively for Control Técnica.</span>
-        </p>
-        <div class="footer-contact">
-            santiago@loopdev.es (+34) 620 863 923
-        </div>
+        <p>&copy; 2026 Preparado exclusivamente para Controltecnica División BIO.</p>
+        <div class="footer-contact">santiago@loopdev.es</div>
     </footer>
 
     <script>
-        // Language Switcher
-        function setLang(lang) {
-            document.getElementById('btn-es').classList.remove('active');
-            document.getElementById('btn-en').classList.remove('active');
-            document.getElementById('btn-' + lang).classList.add('active');
-            
-            document.querySelectorAll('.lang').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.lang.' + lang).forEach(el => el.classList.remove('hidden'));
-        }
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-        // Mobile Menu Toggle
-        function toggleMenu() {
-            // Only trigger on mobile view
-            if (window.innerWidth <= 768) {
-                const menu = document.getElementById('mobile-menu');
-                const hamburger = document.getElementById('hamburger');
-                menu.classList.toggle('active');
-                hamburger.classList.toggle('active');
-            }
-        }
+        hamburgerBtn.addEventListener('click', () => { mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; });
+        closeMenuBtn.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+        document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; }));
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in-up').forEach(element => observer.observe(element));
     </script>
 </body>
 </html>
